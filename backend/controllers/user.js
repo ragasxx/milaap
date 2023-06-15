@@ -1,10 +1,10 @@
-const User = require("../models/User");
-const Post = require("../models/Post");
-const { sendEmail } = require("../middlewares/sendEmail");
-const crypto = require("crypto");
-const cloudinary = require("cloudinary");
+import {User} from "../models/User.js";
+import {Post}  from"../models/Post.js";
+import { sendEmail } from"../middlewares/sendEmail.js";
+import crypto from "crypto";
+import cloudinary from "cloudinary";
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { name, email, password, avatar } = req.body;
 
@@ -47,7 +47,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -91,7 +91,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.logOut = async (req, res) => {
+export const logOut = async (req, res) => {
   try {
     res
       .status(200)
@@ -108,7 +108,7 @@ exports.logOut = async (req, res) => {
   }
 };
 
-exports.followUser = async (req, res) => {
+export const followUser = async (req, res) => {
   try {
     const userToFollow = await User.findById(req.params.id);
     const loggedInUser = await User.findById(req.user._id);
@@ -153,7 +153,7 @@ exports.followUser = async (req, res) => {
   }
 };
 
-exports.updatePassword = async (req, res) => {
+export const updatePassword = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("+password");
 
@@ -189,7 +189,7 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
-exports.updateProfile = async (req, res) => {
+export const updateProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
@@ -227,7 +227,7 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-exports.deleteMyProfile = async (req, res) => {
+export const deleteMyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
@@ -303,7 +303,7 @@ exports.deleteMyProfile = async (req, res) => {
   }
 };
 
-exports.myProfile = async (req, res) => {
+export const myProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate(
       "posts followers following"
@@ -320,7 +320,7 @@ exports.myProfile = async (req, res) => {
   }
 };
 
-exports.getUserProfile = async (req, res) => {
+export const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).populate(
       "posts followers following"
@@ -345,7 +345,7 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({
       name: { $regex: req.query.name, $options: "i" },
@@ -363,7 +363,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.forgotPassword = async (req, res) => {
+export const forgotPassword = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
@@ -412,7 +412,7 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-exports.resetPassword = async (req, res) => {
+export const resetPassword = async (req, res) => {
   try {
     const resetPasswordToken = crypto
       .createHash("sha256")
@@ -450,7 +450,7 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-exports.getMyPosts = async (req, res) => {
+export const getMyPosts = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
@@ -474,7 +474,7 @@ exports.getMyPosts = async (req, res) => {
   }
 };
 
-exports.getUserPosts = async (req, res) => {
+export const getUserPosts = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
 

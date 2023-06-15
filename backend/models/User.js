@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -74,5 +74,4 @@ userSchema.methods.getResetPasswordToken = function () {
   this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
   return resetToken;
 };
-
-module.exports = mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema);

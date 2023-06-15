@@ -1,9 +1,9 @@
-const Post = require("../models/Post");
-const User = require("../models/User");
-const cloudinary = require("cloudinary");
+import {Post} from "../models/Post.js";
+import {User} from "../models/User.js";
+import cloudinary from "cloudinary";
 
 // controller to create the post
-exports.createPost = async (req, res) => {
+export const createPost = async (req, res) => {
   try {
     const myCloud = await cloudinary.v2.uploader.upload_large(req.body.image, {
       folder: "posts",
@@ -37,7 +37,7 @@ exports.createPost = async (req, res) => {
 };
 
 // controller to delete a post
-exports.deletePost = async (req, res) => {
+export const deletePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
@@ -79,7 +79,7 @@ exports.deletePost = async (req, res) => {
 
 // controller to like and unlike the post
 
-exports.likeAndUnlikePost = async (req, res) => {
+export const likeAndUnlikePost = async (req, res) => {
   const post = await Post.findById(req.params.id);
 
   if (!post) {
@@ -112,7 +112,7 @@ exports.likeAndUnlikePost = async (req, res) => {
   }
 };
 
-exports.getPostOfFollowing = async (req, res) => {
+export const getPostOfFollowing = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
@@ -134,7 +134,7 @@ exports.getPostOfFollowing = async (req, res) => {
   }
 };
 
-exports.updateCaption = async (req, res) => {
+export const updateCaption = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -167,7 +167,7 @@ exports.updateCaption = async (req, res) => {
   }
 };
 
-exports.commentOnPost = async (req, res) => {
+export const commentOnPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -213,7 +213,7 @@ exports.commentOnPost = async (req, res) => {
   }
 };
 
-exports.deleteComment = async (req, res) => {
+export const deleteComment = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 

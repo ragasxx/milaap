@@ -1,5 +1,5 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   createPost,
   likeAndUnlikePost,
   deletePost,
@@ -7,8 +7,8 @@ const {
   updateCaption,
   commentOnPost,
   deleteComment,
-} = require("../controllers/post");
-const { isAuthenticated } = require("../middlewares/auth");
+} from "../controllers/post.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 const router = express.Router();
 
 router.route("/post/upload").post(isAuthenticated, createPost);
@@ -23,4 +23,4 @@ router.route("/posts").get(isAuthenticated, getPostOfFollowing);
 router.route("/post/comment/:id").put(isAuthenticated, commentOnPost);
 // to delete a comment
 router.route("/post/deletecomment/:id").delete(isAuthenticated, deleteComment);
-module.exports = router;
+export default router;

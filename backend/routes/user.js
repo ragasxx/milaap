@@ -1,5 +1,5 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   register,
   login,
   followUser,
@@ -14,8 +14,8 @@ const {
   resetPassword,
   getMyPosts,
   getUserPosts,
-} = require("../controllers/user");
-const { isAuthenticated } = require("../middlewares/auth");
+}  from "../controllers/user.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -36,4 +36,4 @@ router.route("/user/:id").get(isAuthenticated, getUserProfile);
 router.route("/users").get(isAuthenticated, getAllUsers);
 router.route("/forgot/password").post(forgotPassword);
 router.route("/password/reset/:token").put(resetPassword);
-module.exports = router;
+export default router;

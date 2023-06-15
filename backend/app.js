@@ -1,30 +1,38 @@
-const cookieParser = require("cookie-parser");
-const express = require("express");
+import express from "express";
+import { config } from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from 'cors';
+
+
+
+config({
+  path: "./config/config.env",
+});
 const app = express();
-const path = require("path");
-
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config({ path: "backend/config/config.env" });
-}
-
-// using middlewares
+// usng middlewares
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "200mb", extended: true }));
 app.use(cookieParser());
 
+app.use(cors({
+  origin:process.env.FRONTEND_URL,
+  credentials:true,
+  methods:["GET","POST","PUT","DELETE"]
+}))
+
 // importing the routes
-const post = require("./routes/post");
-const user = require("./routes/user");
+import post from "./routes/post.js";
+import user from "./routes/user.js";
 
 // using the routes
 
 app.use("/api/v1", post);
 app.use("/api/v1", user);
 
-app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
-});
 
-module.exports = app;
+app.get("/",(req,res)=>{
+  res.send(`<h1> Site is working. click <a href=${process.env.FRONTEND_URL}> here to visit frontend </h1>`);
+})
+
+export default app;

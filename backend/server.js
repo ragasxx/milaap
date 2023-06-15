@@ -1,6 +1,6 @@
-const app = require("./app");
-const { connectDatabase } = require("./config/database");
-const cloudinary = require("cloudinary");
+import app from "./app.js";
+import { connectDatabase } from "./config/database.js";
+import cloudinary from "cloudinary";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
